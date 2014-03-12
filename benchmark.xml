@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<benchmark>
+	<section name="String output" description="echo vs print">
+		<command>
+			echo '';
+		</command>
+		<command>
+			print '';
+		</command>
+		<command>
+			echo 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		</command>
+		<command>
+			print 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		</command>
+		<command>
+			echo '123'.'456'.'789';
+		</command>
+		<command>
+			echo '123','456','789';
+		</command>
+		<command>
+			print '123'.'456'.'789';
+		</command>
+		<command>
+			$alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+			echo 'ABCDEFGHIJKLM'.$alphabet.'NOPQRSTUVWXYZ'.$alphabet;
+		</command>
+		<command>
+			$alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+			echo 'ABCDEFGHIJKLM',$alphabet,'NOPQRSTUVWXYZ',$alphabet;
+		</command>
+		<command>
+			$alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+			print 'ABCDEFGHIJKLM'.$alphabet.'NOPQRSTUVWXYZ'.$alphabet;
+		</command>
+		<command>
+			$alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+			echo $alphabet.$alphabet.$alphabet.alphabet;
+		</command>
+		<command>
+			$alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+			echo $alphabet,$alphabet,$alphabet,alphabet;
+		</command>
+		<command>
+			$alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+			print $alphabet.$alphabet.$alphabet.alphabet;
+		</command>
+	</section>
+</benchmark>
