@@ -80,8 +80,11 @@ class Section
 		return $this->commandList;
 	}
 	
-	public function getHookList($type)
+	public function getHookList($type = null)
 	{
+		if ($type == null)
+			return $this->hookList;
+		
 		$hookList = array();
 		
 		foreach ($this->hookList as $hook)

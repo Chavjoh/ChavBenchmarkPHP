@@ -32,6 +32,7 @@ class Hook
 	
 	const XML_NODE = 'hook';
 	const TYPE_BEFORE = 'before';
+	const TYPE_LOOP_END = 'loop_end';
 	
 	public function __construct($command, $type)
 	{
@@ -57,5 +58,16 @@ class Hook
 	public function getType()
 	{
 		return $this->type;
+	}
+	
+	public function getTypeDescription()
+	{
+		switch ($this->getType())
+		{
+			case Hook::TYPE_BEFORE:
+				return 'Executed before benchmark';
+			case Hook::TYPE_LOOP_END:
+				return 'Executed after each loop';
+		}
 	}
 }

@@ -11,6 +11,11 @@
 	font-weight: bold;
 }
 
+.table .hook_type {
+	width: 200px;
+	vertical-align: middle;
+}
+
 .table pre {
 	margin: 0px;
 }

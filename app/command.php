@@ -104,7 +104,9 @@ class Command
 		{
 			// Eval is Evil
 			eval($this->command);
-			//echo $this->command;
+			
+			foreach ($this->parent->getHookList(Hook::TYPE_LOOP_END) AS $hook)
+				eval($hook->getCommand());
 		}
 		
 		$timeEnd = microtime(true);

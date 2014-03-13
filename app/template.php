@@ -57,7 +57,7 @@
 		<div class="jumbotron">
 			<h1>PHP Benchmark</h1>
 			<p class="lead">
-				...
+				To configure benchmark, use the <strong>benchmark.xml</strong> file.
 			</p>
 		</div>
 		
@@ -66,13 +66,18 @@
 			<blockquote><?= $section->getDescription() ?></blockquote>
 			
 			<?php
-			$hookList = $section->getHookList(Hook::TYPE_BEFORE);
+			$hookList = $section->getHookList();
 			if (count($hookList) > 0):
 			?>
 				<h3>Hooks</h3>
+				<table class="table">
 				<?php foreach($hookList AS $hook):  ?>
-					<pre><?= $hook->getCommand() ?></pre>
+					<tr>
+						<td class="hook_type"><?= $hook->getTypeDescription() ?></td>
+						<td><pre><?= $hook->getCommand() ?></pre></td>
+					</tr>		
 				<?php endforeach; ?>
+				</table>
 			<?php endif; ?>
 			<h3>Results</h3>
 			<table class="table">
