@@ -40,7 +40,7 @@ class Command
 		$this->setParent($parent);
 		$this->setName($name);
 		$this->setCommand($command);
-		$this->setIteration(10000);
+		$this->setIteration(1000);
 	}
 	
 	public function setParent(Section $parent)
