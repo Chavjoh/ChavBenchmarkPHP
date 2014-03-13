@@ -37,8 +37,8 @@ In addition of the command list, you can add hooks.
 ## Hooks
 
 There's two types of hooks :
-* Hooks executed before benchmark
-* Hooks executed after each loop of the benchmark
+* Hooks executed before benchmark (```type="before"```)
+* Hooks executed after each loop of the benchmark (```type="loop_end"```)
 
 Like you see, the hooks are scripts that are executed at one point of the benchmark. You can for example declare or increment variables in hooks.
 
