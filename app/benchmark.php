@@ -55,14 +55,23 @@ class Benchmark
 			// List all commands in the current section
 			foreach ($section->children() as $command) 
 			{
-				$name = (isset($command['name'])) ? $command['name'] : '';
-				
-				$currentCommand = new Command($name, $command->__toString());
-				
-				if (isset($command['iteration']))
-					$currentCommand->setIteration($command['iteration']);
-				
-				$currentSection->addCommand($currentCommand);
+				if ($command->getName() == Hook::XML_NODE)
+				{
+					$type = (isset($command['type'])) ? $command['type'] : '';
+					
+					$currentSection->addHook(new Hook($command->__toString(), $type));
+				}
+				else if ($command->getName() == Command::XML_NODE)
+				{
+					$name = (isset($command['name'])) ? $command['name'] : '';
+					
+					$currentCommand = new Command($currentSection, $name, $command->__toString());
+					
+					if (isset($command['iteration']))
+						$currentCommand->setIteration($command['iteration']);
+					
+					$currentSection->addCommand($currentCommand);
+				}
 			}
 		}
 	}
