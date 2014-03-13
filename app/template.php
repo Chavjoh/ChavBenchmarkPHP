@@ -62,7 +62,7 @@
 		</div>
 		
 		<?php foreach(Benchmark::getInstance()->getSectionList() AS $section): ?>
-			<h1> <?= $section->getName() ?> </h1>
+			<h2> <?= $section->getName() ?> </h2>
 			<blockquote><?= $section->getDescription() ?></blockquote>
 			
 			<?php

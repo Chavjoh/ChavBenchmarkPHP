@@ -1,3 +1,10 @@
+.container h2 {
+	background-color: #606060;
+	color: white;
+	border-radius: 5px;
+	padding: 5px 10px;
+}
+
 .table .ratio,
 .table .time  {
 	width: 100px;
