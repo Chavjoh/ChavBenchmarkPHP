@@ -64,6 +64,17 @@
 		<?php foreach(Benchmark::getInstance()->getSectionList() AS $section): ?>
 			<h1> <?= $section->getName() ?> </h1>
 			<blockquote><?= $section->getDescription() ?></blockquote>
+			
+			<?php
+			$hookList = $section->getHookList(Hook::TYPE_BEFORE);
+			if (count($hookList) > 0):
+			?>
+				<h3>Hooks</h3>
+				<?php foreach($hookList AS $hook):  ?>
+					<pre><?= $hook->getCommand() ?></pre>
+				<?php endforeach; ?>
+			<?php endif; ?>
+			<h3>Results</h3>
 			<table class="table">
 				<?php foreach($section->getCommandList() AS $command): 
 				
