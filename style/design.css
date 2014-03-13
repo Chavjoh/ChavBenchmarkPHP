@@ -1,0 +1,15 @@
+.table .ratio,
+.table .time  {
+	width: 100px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.table .percent {
+	padding: 5px 0px;
+	border-radius: 5px;
+}
+
+.table pre {
+	margin: 0px;
+}
