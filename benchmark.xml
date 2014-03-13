@@ -1,48 +1,109 @@
 <?xml version="1.0"?>
 <benchmark>
+	<section name="String comparison" description="Different ways to compare strings">
+		<hook type="before">
+			<![CDATA[
+			$a = 'The answer to life the universe and everything';
+			$b = 'The answer is 42';
+			]]>
+		</hook>
+		<command iteration="100">
+			<![CDATA[
+			$a == $b
+			]]>
+		</command>
+		<command iteration="100">
+			<![CDATA[
+			!strcmp($a, $b)
+			]]>
+		</command>
+		<command iteration="100">
+			<![CDATA[
+			strcmp($a, $b) == 0
+			]]>
+		</command>
+		<command iteration="100">
+			<![CDATA[
+			strcmp($a, $b) === 0
+			]]>
+		</command>
+		<command iteration="100">
+			<![CDATA[
+			strcasecmp($a, $b) === 0
+			]]>
+		</command>
+	</section>
 	<section name="String output" description="Echo vs Print">
 		<hook type="before">
+			<![CDATA[
 			$alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+			]]>
 		</hook>
 		<command>
+			<![CDATA[
 			echo '';
+			]]>
 		</command>
 		<command>
+			<![CDATA[
 			print '';
+			]]>
 		</command>
 		<command>
+			<![CDATA[
 			echo 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+			]]>
 		</command>
 		<command>
+			<![CDATA[
 			print 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+			]]>
 		</command>
 		<command>
+			<![CDATA[
 			echo '123'.'456'.'789';
+			]]>
 		</command>
 		<command>
+			<![CDATA[
 			echo '123','456','789';
+			]]>
 		</command>
 		<command>
+			<![CDATA[
 			print '123'.'456'.'789';
+			]]>
 		</command>
 		<command>
+			<![CDATA[
 			echo 'ABCDEFGHIJKLM'.$alphabet.'NOPQRSTUVWXYZ'.$alphabet;
+			]]>
 		</command>
 		<command>
+			<![CDATA[
 			echo 'ABCDEFGHIJKLM',$alphabet,'NOPQRSTUVWXYZ',$alphabet;
+			]]>
 		</command>
 		<command>
+			<![CDATA[
 			print 'ABCDEFGHIJKLM'.$alphabet.'NOPQRSTUVWXYZ'.$alphabet;
+			]]>
 		</command>
 		<!--
 		<command>
+			<![CDATA[
 			echo $alphabet.$alphabet.$alphabet.alphabet;
+			]]>
 		</command>
 		<command>
+			<![CDATA[
 			echo $alphabet,$alphabet,$alphabet,alphabet;
+			]]>
 		</command>
 		<command>
+			<![CDATA[
 			print $alphabet.$alphabet.$alphabet.alphabet;
+			]]>
 		</command>
 		-->
 	</section>
@@ -231,7 +292,7 @@
 			]]>
 		</command>
 	</section>
-	<section name="Arrays" description="Iterate over arrays">
+	<section name="Array iteration" description="Iterate over arrays with for, foreach and while">
 		<hook type="before">
 			<![CDATA[
 			$n = 100;
@@ -268,31 +329,91 @@
 			]]>
 		</command>
 	</section>
-	<section name="Replacements in strings" description="Multiple and simple str_replace and strstr">
+	<section name="Array implode" description="Different way to implode arrays">
 		<hook type="before">
 			<![CDATA[
-			$a = 'abcxyz';
+			$array = ('a', 'b', 'c');
+			]]>
+		</hook>
+		<command iteration="10">
+			<![CDATA[
+			$string = implode(" ", $array);
+			]]>
+		</command>
+		<command iteration="10">
+			<![CDATA[
+			$string = "$array[0] $array[1] $array[2]";
+			]]>
+		</command>
+		<command iteration="10">
+			<![CDATA[
+			$string = $array[0] . " " . $array[1] . " " . $array[2];
+			]]>
+		</command>
+		<command iteration="10">
+			<![CDATA[
+			$string = sprintf("%s %s %s", $array[0], $array[1], $array[2]);
+			]]>
+		</command>
+		<command iteration="10">
+			<![CDATA[
+			$string = vsprintf("%s %s %s", $array)
+			]]>
+		</command>
+	</section>
+	<section name="Array explode" description="Different way to explode arrays">
+		<hook type="before">
+			<![CDATA[
+			$string = 'The answer is 42';
+			]]>
+		</hook>
+		<command iteration="10">
+			<![CDATA[
+			$array = explode(" ", $string)
+			]]>
+		</command>
+		<command iteration="10">
+			<![CDATA[
+			$array = split(" ", $string)
+			]]>
+		</command>
+		<command iteration="10">
+			<![CDATA[
+			$array = preg_split("/,/", $string)
+			]]>
+		</command>
+		<command iteration="10">
+			<![CDATA[
+			$matches = array();
+			$array = preg_match_all('/[^,]+/', $string, $matches)
+			]]>
+		</command>
+	</section>
+	<section name="Replacements in strings" description="With str_replace and strstr">
+		<hook type="before">
+			<![CDATA[
+			$string = 'abcxyz';
 			]]>
 		</hook>
 		<command>
 			<![CDATA[
-			$a = str_replace('x', 'y', $a); 
-			$a = str_replace('a', 'b', $a);
+			$string = str_replace('x', 'y', $string); 
+			$string = str_replace('a', 'b', $string);
 			]]>
 		</command>
 		<command>
 			<![CDATA[
-			$a = str_replace('x', 'y', str_replace('a','b', $a));
+			$string = str_replace('x', 'y', str_replace('a', 'b', $string));
 			]]>
 		</command>
 		<command>
 			<![CDATA[
-			$a = str_replace(array('x', 'a'), array('y', 'b'), $a);
+			$string = str_replace(array('x', 'a'), array('y', 'b'), $string);
 			]]>
 		</command>
 		<command>
 			<![CDATA[
-			$a = strtr($a, 'ax', 'by');
+			$string = strtr($string, 'ax', 'by');
 			]]>
 		</command>
 	</section>
