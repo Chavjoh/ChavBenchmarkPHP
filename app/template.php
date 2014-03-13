@@ -36,6 +36,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<!-- Main design -->
+	<link href="style/design.css" rel="stylesheet">
 	<link href="style/jumbotron-narrow.css" rel="stylesheet">
 	
 	<!-- Bootstrap -->
@@ -61,17 +62,23 @@
 		</div>
 		
 		<?php foreach(Benchmark::getInstance()->getSectionList() AS $section): ?>
-			<?php
-			list($factor, $unity) = $section->getDivisionFactor();
-			?>
 			<h1> <?= $section->getName() ?> </h1>
-			<?= $section->getDescription() ?>
-			<table class="table table-striped">
-				<?php foreach($section->getCommandList() AS $command): ?>
+			<blockquote><?= $section->getDescription() ?></blockquote>
+			<table class="table">
+				<?php foreach($section->getCommandList() AS $command): 
+				
+				$rgb = $section->getCommandResultColor($command);
+				?>
 				<tr>
-					<td><?= round($command->getTime() / $factor, 5) ?> <?= $unity ?></td>
-					<td><?= round(($command->getTime() / $section->getFatestTime()) * 100, 1) ?>%</td>
-					<td><?= nl2br($command) ?></td>
+					<td class="time"><?= $section->getCommandTimeWithUnity($command) ?></td>
+					<td class="ratio">
+						<div class="percent" style="
+							background-color: rgb(<?= $rgb[0] ?>, <?= $rgb[1] ?>, <?= $rgb[2] ?>);
+							color: rgb(<?= $rgb[0] ?>, <?= $rgb[0] ?>, <?= $rgb[0] ?>);">
+							<?= round($section->getCommandFactor($command) * 100) ?>%
+						</div>
+					</td>
+					<td><pre><?= $command ?></pre></td>
 				</tr>
 				<?php endforeach; ?>
 			</table>

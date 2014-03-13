@@ -111,18 +111,44 @@ class Section
 		$time = $this->getLongestTime();
 		
 		$timeFactor = array(
-			1 => 's',
-			0.001 => 'ms',
-			0.0000001 => 'μs',
-			0.0000000001 => 'ns'
+			'1.0' => 's',
+			'0.001' => 'ms',
+			'0.0000001' => 'μs',
+			'0.0000000001' => 'ns'
 		);
 		
 		foreach ($timeFactor AS $factor => $name)
 		{
-			if (($time / $factor) > 0)
+			if (($time / $factor) > 1)
 				return array($factor, $name);
 		}
 		
 		return array(null, null);
+	}
+	
+	public function getCommandFactor(Command $command)
+	{
+		return round(($command->getTime() / $this->getFatestTime()), 5);
+	}
+	
+	public function getCommandRatio(Command $command)
+	{
+		$deltaMax = $this->getLongestTime() - $this->getFatestTime();
+		$delta = $command->getTime() - $this->getFatestTime();
+		return $delta / $deltaMax;
+	}
+	
+	public function getCommandResultColor(Command $command)
+	{
+		$ratio = $this->getCommandRatio($command);
+		$ratioInverse = 1 - $ratio;
+		
+		return array(round($ratio * 255), round($ratioInverse * 255), 0);
+	}
+	
+	public function getCommandTimeWithUnity(Command $command)
+	{
+		list($factor, $unity) = $this->getDivisionFactor();
+		return round($command->getTime() / $factor, 3).' '.$unity;
 	}
 }
