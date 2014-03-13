@@ -36,7 +36,7 @@ class Command
 	{
 		$this->setName($name);
 		$this->setCommand($command);
-		$this->setIteration(1000);
+		$this->setIteration(10000);
 	}
 	
 	public function setName($name)
@@ -46,7 +46,7 @@ class Command
 	
 	public function setCommand($command)
 	{
-		$this->command = $command;
+		$this->command = trim(preg_replace('/\t+/', '', $command));
 	}
 	
 	public function setIteration($iteration)
@@ -81,7 +81,7 @@ class Command
 		
 		$timeStart = microtime(true);
 
-		for ($i = 0 ; $i < $this->iteration; $i++)
+		for ($benchmarkLoop = 0 ; $benchmarkLoop < $this->iteration; $benchmarkLoop++)
 		{
 			// I know, Eval is Evil
 			eval($this->command);
