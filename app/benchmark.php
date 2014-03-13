@@ -57,7 +57,10 @@ class Benchmark
 			{
 				$name = (isset($command['name'])) ? $command['name'] : '';
 				
-				$currentCommand = new Command($command->__toString(), $name);
+				$currentCommand = new Command($name, $command->__toString());
+				
+				if (isset($command['iteration']))
+					$currentCommand->setIteration($command['iteration']);
 				
 				$currentSection->addCommand($currentCommand);
 			}
@@ -78,10 +81,7 @@ class Benchmark
 	{
 		foreach ($this->sectionList as $section)
 		{
-			foreach ($section->getCommandList() as $command)
-			{
-				$time = $command->benchmark();
-			}
+			$section->benchmark();
 		}
 	}
 	

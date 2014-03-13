@@ -30,11 +30,13 @@ class Command
 	protected $name;
 	protected $command;
 	protected $time;
+	protected $iteration;
 	
-	public function __construct($command, $name = null)
+	public function __construct($name, $command)
 	{
 		$this->setName($name);
 		$this->setCommand($command);
+		$this->setIteration(1000);
 	}
 	
 	public function setName($name)
@@ -47,6 +49,11 @@ class Command
 		$this->command = $command;
 	}
 	
+	public function setIteration($iteration)
+	{
+		$this->iteration = intval($iteration);
+	}
+	
 	public function getName()
 	{
 		return $this->name;
@@ -57,6 +64,11 @@ class Command
 		return $this->command;
 	}
 	
+	public function getIteration()
+	{
+		return $this->iteration;
+	}
+	
 	public function getTime()
 	{
 		return $this->time;
@@ -64,14 +76,12 @@ class Command
 	
 	public function benchmark()
 	{
-		$loop = 3000;//000;
-
 		// Avoid showing command results
 		ob_start();
 		
 		$timeStart = microtime(true);
 
-		for ($i = 0 ; $i < $loop; $i++)
+		for ($i = 0 ; $i < $this->iteration; $i++)
 		{
 			// I know, Eval is Evil
 			eval($this->command);
@@ -82,6 +92,8 @@ class Command
 		
 		// Clean buffer, we don't need to show command results
 		ob_end_clean();
+		
+		return $this->getTime();
 	}
 	
 	public function __toString()
