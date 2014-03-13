@@ -76,16 +76,14 @@
 			<?php endif; ?>
 			<h3>Results</h3>
 			<table class="table">
-				<?php foreach($section->getCommandList() AS $command): 
-				
-				$rgb = $section->getCommandResultColor($command);
-				?>
+				<?php foreach($section->getCommandList() AS $command): ?>
 				<tr>
 					<td class="time"><?= $section->getCommandTimeWithUnity($command) ?></td>
 					<td class="ratio">
 						<div class="percent" style="
-							background-color: rgb(<?= $rgb[0] ?>, <?= $rgb[1] ?>, <?= $rgb[2] ?>);
-							color: rgb(<?= $rgb[0] ?>, <?= $rgb[0] ?>, <?= $rgb[0] ?>);">
+							border: 1px solid hsl(<?= $section->getCommandResultHue($command) ?>, 50%, 50%);
+							background-color: hsl(<?= $section->getCommandResultHue($command) ?>, 100%, 50%);
+							color: <?= $section->getCommandResultColor($command) ?>;">
 							<?= round($section->getCommandFactor($command) * 100) ?>%
 						</div>
 					</td>

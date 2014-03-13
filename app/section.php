@@ -158,12 +158,21 @@ class Section
 		return $delta / $deltaMax;
 	}
 	
-	public function getCommandResultColor(Command $command)
+	public function getCommandResultHue(Command $command)
 	{
 		$ratio = $this->getCommandRatio($command);
 		$ratioInverse = 1 - $ratio;
 		
-		return array(round($ratio * 255), round($ratioInverse * 255), 0);
+		return $ratioInverse * 120;
+	}
+	
+	// Text color
+	public function getCommandResultColor(Command $command)
+	{
+		if ((1 - $this->getCommandRatio($command)) > 0.3)
+			return 'black';
+		
+		return 'white';
 	}
 	
 	public function getCommandTimeWithUnity(Command $command)

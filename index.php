@@ -31,12 +31,16 @@ set_time_limit(0);
 // Hard mode here :D
 error_reporting(E_ALL);
 
+define("PHP_OPENTAG", "<?php ");
+define("PHP_CLOSETAG", " ?>");
+
 // Define directories path
 define("ROOT", dirname(__FILE__).'/');
 define("PATH_APP", ROOT.'app/');
 
 define("FILE_BENCHMARK", ROOT.'benchmark.xml');
 
+require_once(PATH_APP.'hook.php');
 require_once(PATH_APP.'command.php');
 require_once(PATH_APP.'section.php');
 require_once(PATH_APP.'benchmark.php');
