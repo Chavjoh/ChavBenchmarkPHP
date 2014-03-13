@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <benchmark>
 	<section name="String output" description="Echo vs Print">
+		<hook type="before">
+			$alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		</hook>
 		<command>
 			echo '';
 		</command>
@@ -23,28 +26,22 @@
 			print '123'.'456'.'789';
 		</command>
 		<command>
-			$alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 			echo 'ABCDEFGHIJKLM'.$alphabet.'NOPQRSTUVWXYZ'.$alphabet;
 		</command>
 		<command>
-			$alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 			echo 'ABCDEFGHIJKLM',$alphabet,'NOPQRSTUVWXYZ',$alphabet;
 		</command>
 		<command>
-			$alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 			print 'ABCDEFGHIJKLM'.$alphabet.'NOPQRSTUVWXYZ'.$alphabet;
 		</command>
 		<!--
 		<command>
-			$alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 			echo $alphabet.$alphabet.$alphabet.alphabet;
 		</command>
 		<command>
-			$alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 			echo $alphabet,$alphabet,$alphabet,alphabet;
 		</command>
 		<command>
-			$alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 			print $alphabet.$alphabet.$alphabet.alphabet;
 		</command>
 		-->
@@ -52,16 +49,16 @@
 	<section name="Counting Loops" description="For vs. While">
 		<command iteration="1">
 			<![CDATA[
-			for($i = 0; $i < 10000000; $++i);
+			for($i = 0; $i < 10000000; ++$i);
 			]]>
 		</command>
 		<command iteration="1">
 			<![CDATA[
-			$i = 0; while($i < 10000000) $++i;
+			$i = 0; while($i < 10000000) ++$i;
 			]]>
 		</command>
 	</section>
-	<section name="Increment" description="$++i vs $i++">
+	<section name="Increment" description="++$i vs $i++">
 		<command iteration="1">
 			<![CDATA[
 			for($i = 0; $i < 1000000; $i++);
@@ -69,27 +66,233 @@
 		</command>
 		<command iteration="1">
 			<![CDATA[
-			for($i = 0; $i < 1000000; $++i);
+			for($i = 0; $i < 1000000; ++$i);
 			]]>
 		</command>
 	</section>
 	<section name="Variable assignment" description="Where to place variables to display">
-		<command>
+		<hook type="before">
 			<![CDATA[
 			$i = 'ABC';
+			]]>
+		</hook>
+		<command>
+			<![CDATA[
 			$string = 'This is a variable : '.$i; 
 			]]>
 		</command>
 		<command>
 			<![CDATA[
-			$i = 'ABC';
 			$string = "This is a variable : ".$i;
 			]]>
 		</command>
 		<command>
 			<![CDATA[
-			$i = 'ABC';
 			$string = "This is a variable : $i";
+			]]>
+		</command>
+	</section>
+	<section name="Testing nullity" description="is_null vs === NULL">
+		<hook type="before">
+			<![CDATA[
+			$i = 'ABC';
+			]]>
+		</hook>
+		<command>
+			<![CDATA[
+			$i === NULL; 
+			]]>
+		</command>
+		<command>
+			<![CDATA[
+			is_null($i);
+			]]>
+		</command>
+	</section>
+	<section name="Declaration and variable initialization" description="Best way to declare a variable with the same content">
+		<command>
+			<![CDATA[
+			$var1 = 'Something';
+			$var2 = 'Something';
+			]]>
+		</command>
+		<command>
+			<![CDATA[
+			$var1 = 'Something';
+			$var2 = $var1;
+			]]>
+		</command>
+		<command>
+			<![CDATA[
+			$var1 = $var2 = 'Something';
+			]]>
+		</command>
+	</section>
+	<section name="Condition tests" description="If, switch or ternary operator">
+		<hook type="before">
+			<![CDATA[
+			$i = 1;
+			]]>
+		</hook>
+		<command>
+			<![CDATA[
+			++$i;
+			if ($i % 2 == 1) $var = 0;
+			else $var = 1;
+			]]>
+		</command>
+		<command>
+			<![CDATA[
+			++$i;
+			switch($i % 2)
+			{
+			   case 1: $var = 0; break;
+			   default: $var = 1;
+			}
+			]]>
+		</command>
+		<command>
+			<![CDATA[
+			++$i;
+			$var = (($i % 2 == 1) ? 0 : 1);
+			]]>
+		</command>
+	</section>
+	<section name="Condition tests 2" description="If, switch or ternary operator">
+		<hook type="before">
+			<![CDATA[
+			$i = 0;
+			]]>
+		</hook>
+		<hook type="loop_end">
+			<![CDATA[
+			$i++;
+			]]>
+		</hook>
+		<command>
+			<![CDATA[
+			$var = $i % 8;
+			if ($var == 0) $test = 0;
+			elseif ($var == 1) $test = 1;
+			elseif ($var == 2) $test = 2;
+			elseif ($var == 3) $test = 3;
+			elseif ($var == 4) $test = 4;
+			elseif ($var == 5) $test = 5;
+			elseif ($var == 6) $test = 6;
+			else $test = 7;
+			]]>
+		</command>
+		<command>
+			<![CDATA[
+			$var = $i % 8;
+			switch($var)
+			{
+			   case 0: $test = 0; break;
+			   case 1: $test = 1; break;
+			   case 2: $test = 2; break;
+			   case 3: $test = 3; break;
+			   case 4: $test = 4; break;
+			   case 5: $test = 5; break;
+			   case 6: $test = 6; break;
+			   default: $test = 7;
+			}
+			]]>
+		</command>
+		<!--
+		<command>
+			<![CDATA[
+			$test = ($var == 0) ? 0 : (
+			        ($var == 1) ? 1 : (
+			        ($var == 2) ? 2 : (
+			        ($var == 3) ? 3 : (
+			        ($var == 4) ? 4 : (
+			        ($var == 5) ? 5 : (
+			        ($var == 6) ? 6 : 7))))));
+			]]>
+		</command>
+		-->
+	</section>
+	<section name="Count in a loop" description="Count command in or outside of the loop">
+		<hook type="before">
+			<![CDATA[
+			$j = 0;
+			$array = array('a', 'b', 'c', 'd', 'e');
+			]]>
+		</hook>
+		<command>
+			<![CDATA[
+			$n = count($array);
+			for ($i = 0; $i < $n; $i++) $j++;
+			]]>
+		</command>
+		<command>
+			<![CDATA[
+			for ($i = 0; $i < count($array); $i++) $j++;
+			]]>
+		</command>
+	</section>
+	<section name="Arrays" description="Iterate over arrays">
+		<hook type="before">
+			<![CDATA[
+			$n = 100;
+			$tab = range(1, $n);
+			srand((float)microtime() * 1000000);
+			shuffle($tab);
+			]]>
+		</hook>
+		<command iteration="1000">
+			<![CDATA[
+			for ($i = 0; $i < $n; ++$i) $test = $tab[$i];
+			]]>
+		</command>
+		<command iteration="1000">
+			<![CDATA[
+			foreach ($tab as $key => $value) $test = $value;
+			]]>
+		</command>
+		<command iteration="1000">
+			<![CDATA[
+			foreach ($tab as $value) $test = $value;
+			]]>
+		</command>
+		<command iteration="1000">
+			<![CDATA[
+			while(list($key, $value) = each($tab)) $test = $value;
+			reset($tab);
+			]]>
+		</command>
+		<command iteration="1000">
+			<![CDATA[
+			$i = 0;
+			while ($i < $n) $test = $tab[$i++];
+			]]>
+		</command>
+	</section>
+	<section name="Replacements in strings" description="Multiple and simple str_replace and strstr">
+		<hook type="before">
+			<![CDATA[
+			$a = 'abcxyz';
+			]]>
+		</hook>
+		<command>
+			<![CDATA[
+			$a = str_replace('x', 'y', $a); 
+			$a = str_replace('a', 'b', $a);
+			]]>
+		</command>
+		<command>
+			<![CDATA[
+			$a = str_replace('x', 'y', str_replace('a','b', $a));
+			]]>
+		</command>
+		<command>
+			<![CDATA[
+			$a = str_replace(array('x', 'a'), array('y', 'b'), $a);
+			]]>
+		</command>
+		<command>
+			<![CDATA[
+			$a = strtr($a, 'ax', 'by');
 			]]>
 		</command>
 	</section>
