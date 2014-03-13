@@ -27,16 +27,25 @@
 
 class Command
 {
+	protected $parent;
 	protected $name;
 	protected $command;
 	protected $time;
 	protected $iteration;
 	
-	public function __construct($name, $command)
+	const XML_NODE = 'command';
+	
+	public function __construct(Section $parent, $name, $command)
 	{
+		$this->setParent($parent);
 		$this->setName($name);
 		$this->setCommand($command);
 		$this->setIteration(10000);
+	}
+	
+	public function setParent(Section $parent)
+	{
+		$this->parent = $parent;
 	}
 	
 	public function setName($name)
@@ -79,12 +88,23 @@ class Command
 		// Avoid showing command results
 		ob_start();
 		
+		$hookCommandAll = "";
+		
+		foreach ($this->parent->getHookList(Hook::TYPE_BEFORE) AS $hook)
+		{
+			$hookCommandAll .= $hook->getCommand();
+		}
+		
+		// Attention to the scope of variables and the position of eval command
+		eval($hookCommandAll);
+		
 		$timeStart = microtime(true);
 
-		for ($benchmarkLoop = 0 ; $benchmarkLoop < $this->iteration; $benchmarkLoop++)
+		for ($benchmarkLoop = 0; $benchmarkLoop < $this->iteration; $benchmarkLoop++)
 		{
-			// I know, Eval is Evil
+			// Eval is Evil
 			eval($this->command);
+			//echo $this->command;
 		}
 		
 		$timeEnd = microtime(true);

@@ -29,6 +29,7 @@ class Section
 {
 	protected $name;
 	protected $description;
+	protected $hookList;
 	protected $commandList;
 	protected $time; // Min, Max
 	
@@ -40,6 +41,7 @@ class Section
 		$this->setName($name);
 		$this->setDescription($description);
 		$this->time = null;
+		$this->hookList = array();
 		$this->commandList = array();
 	}
 	
@@ -68,9 +70,27 @@ class Section
 		$this->commandList[] = $command;
 	}
 	
+	public function addHook(Hook $hook)
+	{
+		$this->hookList[] = $hook;
+	}
+	
 	public function getCommandList()
 	{
 		return $this->commandList;
+	}
+	
+	public function getHookList($type)
+	{
+		$hookList = array();
+		
+		foreach ($this->hookList as $hook)
+		{
+			if ($hook->getType() == $type)
+				$hookList[] = $hook;
+		}
+		
+		return $hookList;
 	}
 	
 	public function benchmark()
