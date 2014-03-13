@@ -92,7 +92,7 @@
 							<?= round($section->getCommandFactor($command) * 100) ?>%
 						</div>
 					</td>
-					<td><pre><?= $command ?></pre></td>
+					<td><pre><?= htmlentities($command) ?></pre></td>
 				</tr>
 				<?php endforeach; ?>
 			</table>
