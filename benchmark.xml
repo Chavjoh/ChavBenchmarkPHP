@@ -47,4 +47,12 @@
 			print $alphabet.$alphabet.$alphabet.alphabet;
 		</command>
 	</section>
+	<section name="Counting Loops" description="For vs. While">
+		<command iteration="1">
+			<![CDATA[for($i = 0; $i < 1000000; $i++);]]>
+		</command>
+		<command iteration="1">
+			<![CDATA[$i = 0; while($i < 1000000) $i++;]]>
+		</command>
+	</section>
 </benchmark>
