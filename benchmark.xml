@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <benchmark>
-	<section name="String output" description="echo vs print">
+	<section name="String output" description="Echo vs Print">
 		<command>
 			echo '';
 		</command>
@@ -34,6 +34,7 @@
 			$alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 			print 'ABCDEFGHIJKLM'.$alphabet.'NOPQRSTUVWXYZ'.$alphabet;
 		</command>
+		<!--
 		<command>
 			$alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 			echo $alphabet.$alphabet.$alphabet.alphabet;
@@ -46,13 +47,50 @@
 			$alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 			print $alphabet.$alphabet.$alphabet.alphabet;
 		</command>
+		-->
 	</section>
 	<section name="Counting Loops" description="For vs. While">
 		<command iteration="1">
-			<![CDATA[for($i = 0; $i < 1000000; $i++);]]>
+			<![CDATA[
+			for($i = 0; $i < 10000000; $++i);
+			]]>
 		</command>
 		<command iteration="1">
-			<![CDATA[$i = 0; while($i < 1000000) $i++;]]>
+			<![CDATA[
+			$i = 0; while($i < 10000000) $++i;
+			]]>
+		</command>
+	</section>
+	<section name="Increment" description="$++i vs $i++">
+		<command iteration="1">
+			<![CDATA[
+			for($i = 0; $i < 1000000; $i++);
+			]]>
+		</command>
+		<command iteration="1">
+			<![CDATA[
+			for($i = 0; $i < 1000000; $++i);
+			]]>
+		</command>
+	</section>
+	<section name="Variable assignment" description="Where to place variables to display">
+		<command>
+			<![CDATA[
+			$i = 'ABC';
+			$string = 'This is a variable : '.$i; 
+			]]>
+		</command>
+		<command>
+			<![CDATA[
+			$i = 'ABC';
+			$string = "This is a variable : ".$i;
+			]]>
+		</command>
+		<command>
+			<![CDATA[
+			$i = 'ABC';
+			$string = "This is a variable : $i";
+			]]>
 		</command>
 	</section>
 </benchmark>
