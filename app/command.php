@@ -82,7 +82,7 @@ class Command
 		$this->setParent($parent);
 		$this->setName($name);
 		$this->setCommand($command);
-		$this->setIteration(BENCHMARK_ITERATION);
+		$this->setIteration(ITERATION_BENCHMARK);
 		$this->time = -1;
 	}
 	
