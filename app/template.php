@@ -71,7 +71,7 @@
 			?>
 				<h3>Hooks</h3>
 				<table class="table">
-				<?php foreach($hookList AS $hook):  ?>
+				<?php foreach($hookList AS $hook): ?>
 					<tr>
 						<td class="hook_type"><?= $hook->getTypeDescription() ?></td>
 						<td><pre><?= $hook->getCommand() ?></pre></td>
@@ -87,7 +87,7 @@
 					<td class="ratio">
 						<div class="percent" style="
 							border: 1px solid hsl(<?= $section->getCommandResultHue($command) ?>, 50%, 50%);
-							background-color: hsl(<?= $section->getCommandResultHue($command) ?>, 100%, 50%);
+							background-color: hsl(<?= $section->getCommandResultHue($command) ?>, 80%, 50%);
 							color: <?= $section->getCommandResultColor($command) ?>;">
 							<?= round($section->getCommandFactor($command) * 100) ?>%
 						</div>

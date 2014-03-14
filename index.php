@@ -31,23 +31,25 @@ set_time_limit(0);
 // Hard mode here :D
 error_reporting(E_ALL);
 
-define("PHP_OPENTAG", "<?php ");
-define("PHP_CLOSETAG", " ?>");
-
-// Define directories path
+// Define directories
 define("ROOT", dirname(__FILE__).'/');
 define("PATH_APP", ROOT.'app/');
 
+// Benchmark configuration
 define("FILE_BENCHMARK", ROOT.'benchmark.xml');
+define("ITERATION_BENCHMARK", 1000);
 
+// Include classes
 require_once(PATH_APP.'hook.php');
 require_once(PATH_APP.'command.php');
 require_once(PATH_APP.'section.php');
 require_once(PATH_APP.'benchmark.php');
 
+// Launch benchmark
 $benchmark = Benchmark::getInstance();
 $benchmark->executeBenchmark();
 
+// Show results
 require_once(PATH_APP.'template.php');
 
 ?>
