@@ -297,28 +297,28 @@
 			shuffle($tab);
 			]]>
 		</hook>
-		<command iteration="1000">
+		<command>
 			<![CDATA[
 			for ($i = 0; $i < $n; ++$i) $test = $tab[$i];
 			]]>
 		</command>
-		<command iteration="1000">
+		<command>
 			<![CDATA[
 			foreach ($tab as $key => $value) $test = $value;
 			]]>
 		</command>
-		<command iteration="1000">
+		<command>
 			<![CDATA[
 			foreach ($tab as $value) $test = $value;
 			]]>
 		</command>
-		<command iteration="1000">
+		<command>
 			<![CDATA[
 			while(list($key, $value) = each($tab)) $test = $value;
 			reset($tab);
 			]]>
 		</command>
-		<command iteration="1000">
+		<command>
 			<![CDATA[
 			$i = 0;
 			while ($i < $n) $test = $tab[$i++];
