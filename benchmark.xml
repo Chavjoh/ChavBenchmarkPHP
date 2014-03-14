@@ -89,7 +89,6 @@
 			print 'ABCDEFGHIJKLM'.$alphabet.'NOPQRSTUVWXYZ'.$alphabet;
 			]]>
 		</command>
-		<!--
 		<command>
 			<![CDATA[
 			echo $alphabet.$alphabet.$alphabet.alphabet;
@@ -105,7 +104,6 @@
 			print $alphabet.$alphabet.$alphabet.alphabet;
 			]]>
 		</command>
-		-->
 	</section>
 	<section name="Counting Loops" description="For vs. While">
 		<command iteration="1">
@@ -259,7 +257,6 @@
 			}
 			]]>
 		</command>
-		<!--
 		<command>
 			<![CDATA[
 			$test = ($var == 0) ? 0 : (
@@ -271,7 +268,6 @@
 			        ($var == 6) ? 6 : 7))))));
 			]]>
 		</command>
-		-->
 	</section>
 	<section name="Count in a loop" description="Count command in or outside of the loop">
 		<hook type="before">
